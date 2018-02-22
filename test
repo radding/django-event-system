@@ -26,6 +26,10 @@ except ImportError:
     from django.test.runner import DiscoverRunner
     test_runner = DiscoverRunner(verbosity=1)
 
-failures = test_runner.run_tests(sys.argv[1:])
+args = ['events.tests', ]
+if len(sys.argv) > 1:
+    args = sys.argv[1:]
+
+failures = test_runner.run_tests(args)
 if failures:
     sys.exit(failures)
