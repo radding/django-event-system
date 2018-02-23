@@ -23,7 +23,7 @@ setup(
         'greenlet',
         'pytz',
     ],
-    python_requires='>=3',
+    python_requires='>=3.4',
     keywords="django events events for django",
     classifiers=[
         'Environment :: Web Environment',
