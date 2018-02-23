@@ -218,3 +218,28 @@ SignalToEvent(signal, hook=hook)
 the hook function must return an event or a string!
 
 *Note:* Do not call `Event.Dispatch` inside of a hook function. If you do, the event will be dispatched twice!
+
+## Testing
+If you would like to test that certain events are raised during the course of your unit tests, django-events provide several utilies to make that easier.
+
+### `Dispatcher.MocksDispatch` decorator
+This decorator mocks and puts the Dispatcher into a test mode. In  side this environment, you are able to use a function like `Dispatcher.Expect()`.
+
+Usage:
+
+```python
+from events.events import Dispatcher
+from django.test import TestCase
+
+class TestExample(TestCase):
+
+    @Dispatcher.MocksDispatch
+    def test_SignalToEvent(self):
+        Dispatcher.Expect('some::event::to::be::fired')
+        Dispatcher.Dispatch('some::event::to::be::fired')
+        pass
+    pass
+```
+
+### `Dispatcher.Expect()`
+This lets the dispatcher know you are looking for this event, but to not actually call the listeners on the event. If the event is never called, the test will fail and the message will tell you exactly what events where not raised.
