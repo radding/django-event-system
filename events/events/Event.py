@@ -2,8 +2,14 @@ from gevent.event import Event as GEvent
 from .Dispatcher import Dispatcher
 from .utils import GetPathFromClass
 import gevent
+class StringMC(type):
+    def __str__(cls):
+        return cls.GetEventName()
 
-class Event:
+    def __repr__(cls):
+        return str(cls)
+
+class Event(metaclass=StringMC):
     Name = None
 
     @classmethod
@@ -27,7 +33,7 @@ class Event:
         return event
 
     def __str__(self):
-        return type(self).GetEventName()
+        return self.GetEventName()
 
     def __repr__(self):
         return str(self)

@@ -20,24 +20,23 @@ def SignalToEvent(signal, event=None, sender=None, hook=None):
     if event is None and hook is None:
         raise TypeError("You must define either an event or hook")
 
-    if not isinstance(event, str):
-        event = event.GetEventName()
-        pass
+    event = str(event)
 
     def eventDefHook(self, sender, *args, **kwargs):
-        event = None
+        eventName = event
+        _event = None
         if hook is not None:
-            eventName = hook(sender, *args, **kwargs)
-            if not isinstance(eventName, str):
-                eventName = type(eventName).GetEventName()
-                pass
-            pass
-        return eventName, event
+            _event = hook(sender, *args, **kwargs)
+            eventName = str(_event)
+        return eventName, _event
 
     def signal_hook(sender, *args, **kwargs):
+        args = list(args)
         args.insert(0, sender)
-        eventName, event = eventDefHook(*args, **kwargs)
-        kwargs['event'] = event
+        eventName, event = eventDefHook(sender, *args, **kwargs)
+        if event is None:
+            args.insert(0, event)
+            pass
         Dispatcher.Dispatch(eventName, *args, **kwargs)
         gevent.wait()
         pass

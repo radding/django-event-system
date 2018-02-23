@@ -9,6 +9,8 @@ from events.events import Dispatcher
 # Create your tests here.
 
 class TestDispatcher(TestCase):
+    
+    @Dispatcher.MocksDispatch
     def test_register_handler(self):
         Dispatcher.handlers = collections.defaultdict(list)
         self.assertEquals(len(Dispatcher.handlers[re.compile('test_event')]), 0)
@@ -19,6 +21,7 @@ class TestDispatcher(TestCase):
         self.assertEquals(len(Dispatcher.handlers[re.compile('test_event')]), 1)        
         pass
 
+    @Dispatcher.MocksDispatch
     def test_dispatch(self):
         cb = Mock()
         Dispatcher.RegisterHandler('test_event::2', cb)
@@ -27,6 +30,7 @@ class TestDispatcher(TestCase):
         self.assertTrue(cb.called)
         pass
 
+    @Dispatcher.MocksDispatch
     def test_regex_dispatch(self):
         cb3 = Mock()
         cb4 = Mock()

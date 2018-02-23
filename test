@@ -3,28 +3,31 @@ import django, sys
 from django.conf import settings
 
 settings.configure(DEBUG=True,
-               DATABASES={
-                    'default': {
-                        'ENGINE': 'django.db.backends.sqlite3',
-                        'NAME': ':memory:',
-                    }
-                },
-               ROOT_URLCONF='events.urls',
-               INSTALLED_APPS=('django.contrib.auth',
-                              'django.contrib.contenttypes',
-                              'django.contrib.sessions',
-                              'django.contrib.admin',
-                              'events',))
+    DATABASES={
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    },
+    ROOT_URLCONF='events.urls',
+    INSTALLED_APPS=(
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.admin',
+        'events',
+        'django_nose'
+    ),
+    # TEST_RUNNER = 'django_nose.NoseTestSuiteRunner',
+    # NOSE_ARGS = [
+    #     '--with-coverage',
+    #     '--cover-package=events',
+    # ]
+)
 
-try:
-    # Django <= 1.8
-    from django.test.simple import DjangoTestSuiteRunner
-    test_runner = DjangoTestSuiteRunner(verbosity=1)
-except ImportError:
-    # Django >= 1.8
-    django.setup()
-    from django.test.runner import DiscoverRunner
-    test_runner = DiscoverRunner(verbosity=1)
+django.setup()
+from django.test.runner import DiscoverRunner
+test_runner = DiscoverRunner(verbosity=1)
 
 args = ['events.tests', ]
 if len(sys.argv) > 1:
