@@ -2,5 +2,5 @@ __pycache__/
 *.pyc
 *.pyo
 .*.sw*
-django_events.egg-info/
+*.egg-info/
 dist/
