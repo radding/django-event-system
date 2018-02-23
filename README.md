@@ -1,20 +1,20 @@
-# django-events
+# django-event-system
 A great little utility to implement an event system for django
 
 ## About
-django-events utilizes gevent to build out an easy to use event system. This event system uses strings to track events and call event handlers.
+django-event-system utilizes gevent to build out an easy to use event system. This event system uses strings to track events and call event handlers.
 
 ### Why not just use django's built in signals?
-Unlike django signals, django-events utilizes a string based system for events. This allows developers to listen using regular expressions, and add a slightly nicer interface to interact and deal with events. For example you can create events like `event::db::Model::created`, `event::db::Model::updated`, and `event::db::Model::deleted` and have a listener that listens for `event::db::Model::.*`. This listener will handle all of the defined events. 
+Unlike django signals, django-event-system utilizes a string based system for events. This allows developers to listen using regular expressions, and add a slightly nicer interface to interact and deal with events. For example you can create events like `event::db::Model::created`, `event::db::Model::updated`, and `event::db::Model::deleted` and have a listener that listens for `event::db::Model::.*`. This listener will handle all of the defined events. 
 
 ## Install
-django-events requires python3 and django 1.7+. To install, just run `pip install django-events`
+django-event-system requires python3 and django 1.7+. To install, just run `pip install django-event-system`
 
 ## Getting started
 To get started add `"events"` to your `installed_apps` in `settings.py`. That's really it.
 
 ### The Dispatcher
-The Dispatcher is the central peice to django-events, every single event goes through the dispatcher. While there really isn't a need to use the dipsatcher directly, you can. The dispatcher manages the event queue, the handlers, and dispatching the event. 
+The Dispatcher is the central peice to django-event-system, every single event goes through the dispatcher. While there really isn't a need to use the dipsatcher directly, you can. The dispatcher manages the event queue, the handlers, and dispatching the event. 
 
 #### Registering Event Handlers
 In order to start using the dispatcher, you first need to define your handlers:
@@ -183,7 +183,7 @@ Now the signals will dispatch events. I recommend doing this as early in your ap
 ### Mapping Signals to Events
 Django commes with it's own signal ideas. If you want to listen for some event in django, you would use a signal. But, as these signals are object based, its more boiler plate to listen to multiple signals or to listen to a class of events. 
 
-But django is based on signals, so in order to make it easier to just use events instead, django-events comes with `SignalToEvent` to help convert a signal to an event. Basically, this just connects a listener to a signal and then dispatches an event. The way this works is like so:
+But django is based on signals, so in order to make it easier to just use events instead, django-event-system comes with `SignalToEvent` to help convert a signal to an event. Basically, this just connects a listener to a signal and then dispatches an event. The way this works is like so:
 
 ```python
 from events import SignalToEvent
@@ -220,7 +220,7 @@ the hook function must return an event or a string!
 *Note:* Do not call `Event.Dispatch` inside of a hook function. If you do, the event will be dispatched twice!
 
 ## Testing
-If you would like to test that certain events are raised during the course of your unit tests, django-events provide several utilies to make that easier.
+If you would like to test that certain events are raised during the course of your unit tests, django-event-system provide several utilies to make that easier.
 
 ### `Dispatcher.MocksDispatch` decorator
 This decorator mocks and puts the Dispatcher into a test mode. In  side this environment, you are able to use a function like `Dispatcher.Expect()`.

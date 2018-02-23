@@ -8,16 +8,23 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-events',
-    version='0.1.0',
+    name='django-event-system',
+    version='0.1.0.dev2',
     packages=find_packages(),
     include_package_data=True,
-    license='MIT License',  # example license
+    license='MIT',  # example license
     description='A simple package that implements an event system in django',
     long_description=README,
     url='http://yoseph.tech/',
     author='Yoseph Radding',
     author_email='yoseph@shuttl.io',
+    install_requires=[
+        'gevent',
+        'greenlet',
+        'pytz',
+    ],
+    python_requires='>=3',
+    keywords="django events events for django",
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -31,4 +38,9 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
+    project_urls={
+        'Documentation': 'https://github.com/radding/django-events/blob/master/README.md',
+        'Source': 'https://github.com/radding/django-events/',
+        'Tracker': 'https://github.com/radding/django-events/issues',
+    },
 )
