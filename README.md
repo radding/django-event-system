@@ -1,4 +1,4 @@
-# django-event-system [![PyPI version](https://badge.fury.io/py/django-event-system.svg)](https://badge.fury.io/py/django-event-system)
+# django-event-system [![PyPI version](https://badge.fury.io/py/django-event-system.svg)](https://badge.fury.io/py/django-event-system) [![Build Status](https://travis-ci.org/radding/django-event-system.svg?branch=master)](https://travis-ci.org/radding/django-event-system)
 A great little utility to implement an event system for django
 
 ## About
