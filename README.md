@@ -134,22 +134,22 @@ from my.models import Example
 class ExampleModelObserver(Observer):
     observes = Example
     
-    def creating(self, example):
+    def creating(self, eventName, example):
         print('creating a Example with name:', example.name)
 
-    def created(self, example):
+    def created(self, eventName, example):
         print('created a Example with name:', example.name)
 
-    def updating(self, example):
+    def updating(self, eventName, example):
         print('updating a Example with name:', example.name)
 
-    def updated(self, example):
+    def updated(self, eventName, example):
         print('updated a Example with name:', example.name)
 
-    def deleting(self, example):
+    def deleting(self, eventName, example):
         print('deleting a Example with name:', example.name)
 
-    def deleted(self, example):
+    def deleted(self, eventName, example):
         print('deleted a Example with name:', example.name)
 ```
 
@@ -179,6 +179,27 @@ RegisterSignalsFor(Example)
 ```
 
 Now the signals will dispatch events. I recommend doing this as early in your application as possible.
+
+#### Registering Observers
+I recommend you keep all of  your app observers in an observer directory. Then inside that dir's `__init__.py` import all of your observers. 
+
+In django, if you try to use Models before the application is ready, then you will get the infamous `django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.` exception. To solve this, go to `apps.py` in your django app and define a `ready` method. Inside this method, import your observers like so: `import myapp.observers`. Then in the app's `__init__.py` file put this code: `default_app_config = 'myapp.apps.MyAppConfig'`. Wnen the models are ready, the observers will get registered! So you `apps.py` should look like this:
+
+```python
+from django.apps import AppConfig
+
+class MyAppConfig(AppConfig):
+    name = 'myapp'
+
+    def ready(self):
+        import myapp.observers      
+```
+
+and your `__init__.py` looks like this:
+
+```python
+default_app_config = 'myapp.apps.MyAppConfig
+```
 
 ### Mapping Signals to Events
 Django commes with it's own signal ideas. If you want to listen for some event in django, you would use a signal. But, as these signals are object based, its more boiler plate to listen to multiple signals or to listen to a class of events. 

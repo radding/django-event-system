@@ -21,20 +21,20 @@ class ObserverMeta(type):
 
 class Observer(metaclass=ObserverMeta):
     observes = None
-    def creating(self, instance):
+    def creating(self, *args, **kwargs):
         pass
     
-    def created(self, instance):
+    def created(self, *args, **kwargs):
         pass
 
-    def updating(self, instance):
+    def updating(self, *args, **kwargs):
         pass
     
-    def updated(self, instance):
+    def updated(self, *args, **kwargs):
         pass
     
-    def deleting(self, instance):
+    def deleting(self, *args, **kwargs):
         pass
 
-    def deleted(self, instance):
+    def deleted(self, *args, **kwargs):
         pass
