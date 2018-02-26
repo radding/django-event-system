@@ -3,6 +3,7 @@ import gevent
 from gevent.queue import Queue
 import re
 import functools
+import traceback
 
 class DispatchMeta(type):
     def __new__(cls, *args, **kwargs):
@@ -83,7 +84,11 @@ class Dispatcher(metaclass=DispatchMeta):
             for key, value in cls.handlers.items():
                 if key.fullmatch(lastDispatch['event']) is not None:
                     for i in value:
-                        i(*lastDispatch['args'], **lastDispatch['kwargs'])
+                        try:
+                            i(*lastDispatch['args'], **lastDispatch['kwargs'])
+                        except Exception as e:
+                            traceback.print_exc() 
+                            pass                           
                     pass
                 pass
             pass
