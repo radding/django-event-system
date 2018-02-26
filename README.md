@@ -201,6 +201,9 @@ and your `__init__.py` looks like this:
 default_app_config = 'myapp.apps.MyAppConfig
 ```
 
+#### Events for non observed models
+If the Model doesn't have an observer, no events will be dispatched for that model. In order to make un-observed models dispatch events, use the `RegisterSignalsFor` function. This function juust takes a model class and will register all the signal objects and map them to an event based on the model's name.
+
 ### Mapping Signals to Events
 Django commes with it's own signal ideas. If you want to listen for some event in django, you would use a signal. But, as these signals are object based, its more boiler plate to listen to multiple signals or to listen to a class of events. 
 
