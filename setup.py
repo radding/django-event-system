@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-event-system',
-    version='0.3.0.dev1',
+    version='0.3.1.dev1',
     packages=find_packages(),
     include_package_data=True,
     license='MIT',  # example license

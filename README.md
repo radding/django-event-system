@@ -13,6 +13,9 @@ django-event-system requires python3 and django 1.7+. To install, just run `pip 
 ## Getting started
 To get started add `"events"` to your `installed_apps` in `settings.py`. That's really it.
 
+### Important note about gevent and `monkey_patch`
+Django event system does not use [gevent's monkey patch](http://www.gevent.org/gevent.monkey.html) utility anywhere. If you want to monkey patch (and I recommend you do), you need to do it yourself. 
+
 ### The Dispatcher
 The Dispatcher is the central peice to django-event-system, every single event goes through the dispatcher. While there really isn't a need to use the dipsatcher directly, you can. The dispatcher manages the event queue, the handlers, and dispatching the event. 
 
@@ -43,6 +46,9 @@ This handler will respond to any event that has a tag that begins with `event::n
 To Dispatch an event, all you need to do is call `Dispatcher.Dispatch('event::name')`. This call will call every listener that is waiting for that event.
 
 If you need to pass arguments to an event handler, all you need to is: `Dispatcher.Dispatch('event::name', *args, **kwargs)`
+
+#### Clearing the queue
+Because django-event-system is based off of gevent, its possible that the queue doesn't get cleared. If you want to force the queue to be cleared after a function, you should use the `Dispatcher.EnsureQueueIsCleared` decorator. This will run your function first and then clear the queue. If you don't want to use the wrapper, you can use the `Dispatcher.ClearQueue` method instead.
 
 ### The `Event` class
 The `Event` class is really just here to stop you from making mistakes. All the `Event` class does is build a string for your event and gives you a `Dispatch` helper.

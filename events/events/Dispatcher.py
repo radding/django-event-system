@@ -36,6 +36,13 @@ class Dispatcher(metaclass=DispatchMeta):
         pass
 
     @classmethod
+    def ClearQueue(cls):
+        while not cls.queue.empty():
+            gevent.sleep()
+            pass
+        pass
+
+    @classmethod
     def EnsureQueueIsCleared(cls, func):
         '''
             A decorator to make sure that all events queued by func are handled.
@@ -43,9 +50,7 @@ class Dispatcher(metaclass=DispatchMeta):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             retVal = func(*args, **kwargs)
-            while not cls.queue.empty():
-                gevent.sleep()
-                pass
+            cls.ClearQueue()
             return retVal
         return wrapper
 
@@ -59,13 +64,10 @@ class Dispatcher(metaclass=DispatchMeta):
             result = func(self, *args, **kwargs)
             gevent.sleep()            
             cls.isTesting = False            
-            while not cls.queue.empty():
-                gevent.sleep()
-                pass
+            cls.ClearQueue()
             leftOver = cls.killEvent - cls.called
             message = "Event(s) {} were not called".format(', '.join(leftOver))
             self.assertTrue(len(leftOver) == 0, message)
-
             cls.Reset()
             return result
         return wrapper
