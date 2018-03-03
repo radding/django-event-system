@@ -36,6 +36,21 @@ class Dispatcher(metaclass=DispatchMeta):
         pass
 
     @classmethod
+    def EnsureQueueIsCleared(cls, func):
+        '''
+            A decorator to make sure that all events queued by func are handled.
+        '''
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            retVal = func(*args, **kwargs)
+            while not cls.queue.empty():
+                gevent.sleep()
+                pass
+            return retVal
+        return wrapper
+
+
+    @classmethod
     def MocksDispatch(cls, func):
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
