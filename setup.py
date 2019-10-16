@@ -9,12 +9,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-event-system',
-    version='0.3.1.dev1',
+    version='1.0.1',
     packages=find_packages(),
     include_package_data=True,
     license='MIT',  # example license
     description='A simple package that implements an event system in django',
     long_description=README,
+    long_description_content_type="text/markdown",
     url='http://yoseph.tech/',
     author='Yoseph Radding',
     author_email='yoseph@shuttl.io',
