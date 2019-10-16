@@ -2,7 +2,8 @@
 import django, sys
 from django.conf import settings
 
-settings.configure(DEBUG=True,
+settings.configure(
+    DEBUG=True,
     DATABASES={
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -14,10 +15,10 @@ settings.configure(DEBUG=True,
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.sessions',
-        'django.contrib.admin',
         'events',
         'django_nose'
     ),
+
     # TEST_RUNNER = 'django_nose.NoseTestSuiteRunner',
     # NOSE_ARGS = [
     #     '--with-coverage',

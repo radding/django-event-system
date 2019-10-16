@@ -1,7 +1,8 @@
 coverage==4.5.1
-Django==2.0.8
+Django==2.2.6
 django-nose==1.4.5
-gevent==1.2.2
-greenlet==0.4.13
+gevent==1.4.0
+greenlet==0.4.15
 nose==1.3.7
 pytz==2018.3
+sqlparse==0.3.0
