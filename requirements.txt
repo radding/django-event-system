@@ -1,5 +1,5 @@
 coverage==4.5.1
-Django==2.2.6
+Django==2.2.20
 django-nose==1.4.5
 gevent==1.4.0
 greenlet==0.4.15
