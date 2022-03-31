@@ -5,13 +5,15 @@ A great little utility to implement an event system for django
 django-event-system utilizes gevent to build out an easy to use event system. This event system uses strings to track events and call event handlers.
 
 ### Why not just use django's built in signals?
-Unlike django signals, django-event-system utilizes a string based system for events. This allows developers to listen using regular expressions, and add a slightly nicer interface to interact and deal with events. For example you can create events like `event::db::Model::created`, `event::db::Model::updated`, and `event::db::Model::deleted` and have a listener that listens for `event::db::Model::.*`. This listener will handle all of the defined events. 
+Django signals are synchronous, while this project leverages Gevent to have asynchronous events. This means that you can fire off an event, and when Gevent is ready to pick it back up, it will handle the event. No more does leveraging signals block your request. 
+
+Also, unlike django signals, django-event-system utilizes a string based system for events. This allows developers to listen using regular expressions, and add a slightly nicer interface to interact and deal with events. For example you can create events like `event::db::Model::created`, `event::db::Model::updated`, and `event::db::Model::deleted` and have a listener that listens for `event::db::Model::.*`. This listener will handle all of the defined events. 
 
 ## Install
 django-event-system requires python3 and django 1.7+. To install, just run `pip install django-event-system`
 
 ## Getting started
-To get started add `"events"` to your `installed_apps` in `settings.py`. That's really it.
+To get started add `"events"` to your `installed_apps` in `settings.py`. It is highly suggested that you monkey patch and use the gevent WSGI server in order for this to work properly. With out gevent's monkey patching and the wsgi server, you run the risk of the event loop never moving on to the event green threads, which means your events will never get handled. If you don't want to do this, you can manually call `ClearQueue` or decorate your method with `EnsureQueueIsClear`.
 
 ### Important note about gevent and `monkey_patch`
 Django event system does not use [gevent's monkey patch](http://www.gevent.org/gevent.monkey.html) utility anywhere. If you want to monkey patch (and I recommend you do), you need to do it yourself. 
