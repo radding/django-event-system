@@ -11,3 +11,11 @@ install:
 # command to run tests
 script:
   - python test # or py.test for Python versions 3.5 and below
+deploy:
+  provider: pypi
+  user: qiwihui
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+  password:
+    secure: gW8xjfI6h0N9qCTd9R7WEN362+xuWLdZidw5X+kLrtFST6cenWqPpSRrMNrUsk2Twe/QFZhA5eS2HY4lAAkKsqZ7+pzC98R/zEXbNZzk3yWpIKr4myE5mtk9dHzIGcXCZ1Q5BTkCKJwuTGBYOucIFv+PeEYir5LIsZiAKcB1WS73wYmP5B3P9ir82TQZ2hdUuthHAJpO0kIvERjaPqDqnVAN55kyIykSzVWFG275BKY4/un6edIaosULuzN3VoNnklSG0ujRrzO3aGtptfmOzDGypK796yxXalWQM5joRxj+bnefrGqDf7lxe4JxMuPfbzytBOUM1d5/qlVSeEgyf+rhhZ7NDL4oPFIyjGQUSxdGXE7I8J+YISZrZT4htYCYlJwhjcLkdIAWn4snohs21jpa+orkkuM4r1PpMs6AoCuG40HUbUnDvNTmftp+Ph1o32X5Es/Nqgyf0qUzkzng7I1MNX6eQBriW+9hXeh7DdrihU2EEW+uhfr4j8UzgbJ90hpOTzQUpl/FRwPOnI2fdEgmvfVKHtYqFqvi04sS2/jK3vWneoqVNtGHMs/i5CowmvCn7Pl7DB7BNH2W/2wMAUyC/H8wOjGVx2ZKPPywLg5IDH/p+/kadc4FcK3fqRautgNExrJp8QgYE/CgFj/oihBGxHgblZGsrjNwPhpwWG4=
